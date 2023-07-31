@@ -25,7 +25,7 @@ func main() {
 	dru := repository.NewDataBaseRepositoryUser(db)
 	su := service.NewServiceUser(dru)
 	hu := handler.NewHandlerUser(su)
-	_ = hu
+	myRouter.HandleFunc("/user", hu.CreateUser).Methods(http.MethodPost)
 
-	log.Fatal(http.ListenAndServe(":8080", myRouter))
+	log.Fatal(http.ListenAndServe(":5555", myRouter))
 }
