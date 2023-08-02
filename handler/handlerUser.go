@@ -2,7 +2,6 @@ package handler
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 
@@ -34,8 +33,7 @@ func (h HandlerUser) CreateUser(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(err.Error()))
 	}
-	//fmt.Println(data)
-	fmt.Println(u)
+
 	err = h.service.CreateUser(u)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
