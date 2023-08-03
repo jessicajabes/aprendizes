@@ -41,8 +41,6 @@ func (m Middleware) AuthRoute(next func(w http.ResponseWriter, r *http.Request))
 			w.Write([]byte("Not Authorized"))
 			return
 		}
-		next(w, r.WithContext((utils.ContextWithUserID(r.Context(), userID))))
-
 		next(w, r.WithContext(utils.ContextWithUserAdmin((utils.ContextWithUserID(r.Context(), userID)), userAdmin)))
 	}
 }
