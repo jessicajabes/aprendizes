@@ -26,6 +26,10 @@ func main() {
 	su := service.NewServiceUser(dru)
 	hu := handler.NewHandlerUser(su)
 	myRouter.HandleFunc("/user", hu.CreateUser).Methods(http.MethodPost)
+	myRouter.HandleFunc("/user", hu.GetAllUser).Methods(http.MethodGet)
+	myRouter.HandleFunc("/user/{id}", hu.GetIDUser).Methods(http.MethodGet)
+	myRouter.HandleFunc("/user/{id}", hu.DeleteUser).Methods(http.MethodDelete)
+	myRouter.HandleFunc("/user/{id}", hu.PutUser).Methods(http.MethodPut)
 
 	log.Fatal(http.ListenAndServe(":5555", myRouter))
 }
