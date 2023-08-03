@@ -1,6 +1,8 @@
 package service
 
 import (
+	"errors"
+
 	"github.com/jessicajabes/aprendizes/dtos"
 )
 
@@ -8,7 +10,7 @@ type UserStorager interface {
 	CreateUser(dtos.User) error
 	GetAllUser() ([]dtos.User, error)
 	GetIDUser(id int) (dtos.User, error)
-	//GetUsernameUser(username string) (dtos.User, error)
+	GetUsernameUser(username string) (dtos.User, error)
 	DeleteUser(id int) error
 	PutUser(id int, a dtos.User) error
 }
@@ -22,6 +24,13 @@ func NewServiceUser(repository UserStorager) *ServiceUser {
 }
 
 func (s ServiceUser) CreateUser(user dtos.User) error {
+	data, err := s.repository.GetUsernameUser(user.Username)
+	if err != nil {
+		return err
+	}
+	if data.Username == user.Username {
+		return errors.New("username already registered")
+	}
 	return s.repository.CreateUser(user)
 }
 func (s ServiceUser) GetAllUser() ([]dtos.User, error) {
